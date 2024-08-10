@@ -22,10 +22,13 @@
                     id="animated-asset-1"
                     src="assets/asset.glb"
                 ></a-asset-item>
-                <!-- No necesitas pre-cargar la imagen en a-assets, puedes usarla directamente -->
+                <a-asset-item
+                    id="animated-asset-2"
+                    src="assets/assetdea2.glb"
+                ></a-asset-item>
             </a-assets>
 
-            <!-- Primer marcador con el modelo 3D -->
+            <!-- Primer marcador con el primer modelo 3D -->
             <a-marker
                 id="markerA"
                 type="pattern"
@@ -36,8 +39,8 @@
                 cursor="fuse: false; rayOrigin: mouse;"
             >
                 <a-entity
-                    id="bowser-model-1"
-                    scale="3 3 3"
+                    id="model-1"
+                    scale="2 2 2"
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset-1"
                     class="clickable"
@@ -45,7 +48,7 @@
                 ></a-entity>
             </a-marker>
 
-            <!-- Segundo marcador con la imagen -->
+            <!-- Segundo marcador con el segundo modelo 3D -->
             <a-marker
                 id="markerB"
                 type="pattern"
@@ -55,13 +58,14 @@
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
             >
-                <a-image
-                    id="image-entity"
-                    src="assets/assetimg.jpeg"
-                    scale="3 3 3"
+                <a-entity
+                    id="model-2"
+                    scale="2 2 2"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#animated-asset-2"
                     class="clickable"
                     gesture-handler
-                ></a-image>
+                ></a-entity>
             </a-marker>
 
             <a-entity camera></a-entity>
