@@ -12,7 +12,7 @@
                 top: 10px;
                 left: 50%;
                 transform: translateX(-50%);
-                color: white;
+                color: rgb(8, 111, 255);
                 z-index: 10;
                 font-family: Arial, sans-serif;
                 font-size: 2em;
@@ -21,7 +21,7 @@
     </head>
 
     <body style="margin: 0; overflow: hidden;">
-        <h1>GRCP ARG</h1>
+        <h1>G-RCP ARG</h1>
         
         <a-scene
             vr-mode-ui="enabled: false;"
@@ -42,11 +42,11 @@
 
             <!-- Marcadores y modelos -->
             <a-marker id="marker1" type="pattern" preset="custom" url="assets/pattern-1.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity scale="2 2 2" animation-mixer="loop: repeat" gltf-model="#model1" class="clickable" gesture-handler></a-entity>
+                <a-entity scale="1 1 1" animation-mixer="loop: repeat" gltf-model="#model1" class="clickable" gesture-handler></a-entity>
             </a-marker>
 
             <a-marker id="marker2" type="pattern" preset="custom" url="assets/pattern-2.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity scale="2 2 2" animation-mixer="loop: repeat" gltf-model="#model2" class="clickable" gesture-handler></a-entity>
+                <a-entity scale="1 1 1" animation-mixer="loop: repeat" gltf-model="#model2" class="clickable" gesture-handler></a-entity>
             </a-marker>
 
             <a-marker id="marker3" type="pattern" preset="custom" url="assets/pattern-3.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
