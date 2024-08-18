@@ -4,8 +4,6 @@
         <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
         <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
         <style>
             .header, .footer {
                 position: absolute;
@@ -53,28 +51,35 @@
             renderer="logarithmicDepthBuffer: true;"
             arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
             embedded
-            gesture-detector
         >
+            <a-assets>
+                <!-- Carga de los modelos GLB -->
+                <a-asset-item id="model1" src="assets/model1.glb"></a-asset-item>
+                <a-asset-item id="model2" src="assets/model2.glb"></a-asset-item>
+                <a-asset-item id="model3" src="assets/model3.glb"></a-asset-item>
+                <a-asset-item id="model4" src="assets/model4.glb"></a-asset-item>
+                <a-asset-item id="model5" src="assets/model5.glb"></a-asset-item>
+            </a-assets>
 
             <!-- Marcadores y modelos -->
-            <a-marker id="marker1" type="pattern" preset="custom" url="assets/pattern-1.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity id="model1" scale="1 1 1" animation-mixer="loop: repeat" class="clickable" gesture-handler visible="false"></a-entity>
+            <a-marker id="marker1" type="pattern" preset="custom" url="assets/pattern-1.patt">
+                <a-entity scale="1 1 1" animation-mixer="loop: repeat" gltf-model="#model1"></a-entity>
             </a-marker>
 
-            <a-marker id="marker2" type="pattern" preset="custom" url="assets/pattern-2.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity id="model2" scale="1 1 1" animation-mixer="loop: repeat" class="clickable" gesture-handler visible="false"></a-entity>
+            <a-marker id="marker2" type="pattern" preset="custom" url="assets/pattern-2.patt">
+                <a-entity scale="1 1 1" animation-mixer="loop: repeat" gltf-model="#model2"></a-entity>
             </a-marker>
 
-            <a-marker id="marker3" type="pattern" preset="custom" url="assets/pattern-3.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity id="model3" scale="2 2 2" animation-mixer="loop: repeat" class="clickable" gesture-handler visible="false"></a-entity>
+            <a-marker id="marker3" type="pattern" preset="custom" url="assets/pattern-3.patt">
+                <a-entity scale="2 2 2" animation-mixer="loop: repeat" gltf-model="#model3"></a-entity>
             </a-marker>
 
-            <a-marker id="marker4" type="pattern" preset="custom" url="assets/pattern-4.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity id="model4" scale="2 2 2" animation-mixer="loop: repeat" class="clickable" gesture-handler visible="false"></a-entity>
+            <a-marker id="marker4" type="pattern" preset="custom" url="assets/pattern-4.patt">
+                <a-entity scale="2 2 2" animation-mixer="loop: repeat" gltf-model="#model4"></a-entity>
             </a-marker>
 
-            <a-marker id="marker5" type="pattern" preset="custom" url="assets/pattern-5.patt" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-                <a-entity id="model5" scale="2 2 2" animation-mixer="loop: repeat" class="clickable" gesture-handler visible="false"></a-entity>
+            <a-marker id="marker5" type="pattern" preset="custom" url="assets/pattern-5.patt">
+                <a-entity scale="2 2 2" animation-mixer="loop: repeat" gltf-model="#model5"></a-entity>
             </a-marker>
 
             <a-entity camera></a-entity>
@@ -83,31 +88,5 @@
         <div class="footer">
             <p>Developed by Julian Peruzzi</p>
         </div>
-
-        <script>
-            AFRAME.registerComponent('load-model-on-detect', {
-                init: function () {
-                    var marker = this.el;
-                    var model = document.querySelector('#' + marker.id.replace('marker', 'model'));
-
-                    marker.addEventListener('markerFound', function () {
-                        if (!model.hasLoaded) {
-                            model.setAttribute('gltf-model', 'url(assets/' + marker.id.replace('marker', 'model') + '.glb)');
-                            model.hasLoaded = true;
-                        }
-                        model.setAttribute('visible', true);
-                    });
-
-                    marker.addEventListener('markerLost', function () {
-                        model.setAttribute('visible', false);
-                    });
-                }
-            });
-
-            // Asignar el componente personalizado a cada marcador
-            document.querySelectorAll('a-marker').forEach(function (marker) {
-                marker.setAttribute('load-model-on-detect', '');
-            });
-        </script>
     </body>
 </html>
