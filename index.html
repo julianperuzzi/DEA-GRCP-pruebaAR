@@ -37,6 +37,25 @@
                 font-size: 0.8em;
                 margin: 0;
             }
+
+            .loading-screen {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 100;
+            }
+
+            .loading-text {
+                color: white;
+                font-family: Arial, sans-serif;
+                font-size: 1.5em;
+            }
         </style>
     </head>
 
@@ -44,10 +63,15 @@
         <div class="header">
             <h1>G-RCP ARG</h1>
         </div>
-        
+
+        <!-- Pantalla de carga -->
+        <div id="loading-screen" class="loading-screen">
+            <p class="loading-text">Cargando, por favor espera...</p>
+        </div>
+
         <a-scene
             vr-mode-ui="enabled: false;"
-            loading-screen="enabled: false;"
+            loading-screen="enabled: false;" <!-- Desactiva la pantalla de carga por defecto -->
             renderer="logarithmicDepthBuffer: true;"
             arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
             embedded
@@ -88,5 +112,12 @@
         <div class="footer">
             <p>Developed by Julian Peruzzi</p>
         </div>
+
+        <script>
+            // Ocultar la pantalla de carga cuando los modelos estén cargados
+            document.querySelector('a-scene').addEventListener('loaded', function () {
+                document.getElementById('loading-screen').style.display = 'none';
+            });
+        </script>
     </body>
 </html>
