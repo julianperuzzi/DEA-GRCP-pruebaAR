@@ -38,7 +38,7 @@
                 margin: 0;
             }
 
-            .loading-screen, .selection-screen {
+            .loading-screen {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -49,27 +49,12 @@
                 align-items: center;
                 justify-content: center;
                 z-index: 100;
-                flex-direction: column;
             }
 
-            .loading-text, .selection-button {
+            .loading-text {
                 color: white;
                 font-family: Arial, sans-serif;
                 font-size: 1.5em;
-                margin: 10px;
-                cursor: pointer;
-            }
-
-            .selection-button {
-                padding: 10px 20px;
-                background-color: #444;
-                border: none;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
-
-            .selection-button:hover {
-                background-color: #666;
             }
         </style>
     </head>
@@ -79,26 +64,17 @@
             <h1>G-RCP ARG</h1>
         </div>
 
-        <!-- Pantalla de selección -->
-        <div id="selection-screen" class="selection-screen">
-            <button class="selection-button" onclick="startARWithCodes()">Realidad Aumentada con Códigos</button>
-            <button class="selection-button" onclick="startARDemo()">Realidad Aumentada Demo</button>
-        </div>
-
         <!-- Pantalla de carga -->
-        <div id="loading-screen" class="loading-screen" style="display: none;">
+        <div id="loading-screen" class="loading-screen">
             <p class="loading-text">Cargando, por favor espera...</p>
         </div>
 
-        <!-- Escena de Realidad Aumentada con Códigos -->
         <a-scene
-            id="ar-scene"
             vr-mode-ui="enabled: false;"
             loading-screen="enabled: false;" 
             renderer="logarithmicDepthBuffer: true;"
             arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
             embedded
-            style="display: none;"
         >
             <a-assets>
                 <!-- Carga de los modelos GLB -->
@@ -111,7 +87,13 @@
 
             <!-- Marcadores y modelos -->
             <a-marker id="marker1" type="pattern" preset="custom" url="assets/pattern-1.patt">
-                <a-entity position="0 0 0" scale="15 15 15" rotation="-30 0 0" animation-mixer gltf-model="#model1"></a-entity>
+                <a-entity 
+        position="0 0 0" 
+        scale="15 15 15" 
+        rotation="-30 0 0" 
+        animation-mixer 
+        gltf-model="#model1">
+    </a-entity>
             </a-marker>
 
             <a-marker id="marker2" type="pattern" preset="custom" url="assets/pattern-2.patt">
@@ -133,78 +115,14 @@
             <a-entity camera></a-entity>
         </a-scene>
 
-        <!-- Escena Demo sin AR (Fondo Blanco) -->
-        <a-scene id="demo-scene" embedded style="display: none; background: white;">
-            <a-assets>
-                <!-- Modelo GLB para la demo -->
-                <a-asset-item id="demo-model" src="assets/human_heart_3d_model.glb"></a-asset-item>
-            </a-assets>
-
-            <!-- Modelo 3D en el centro sin necesidad de patrones -->
-            <a-entity 
-                position="0 1.6 -3" 
-                scale="2 2 2" 
-                rotation="0 180 0" 
-                gltf-model="#demo-model"
-                animation-mixer
-                rotation="0 0 0"
-                gesture-handler></a-entity>
-
-            <a-entity camera></a-entity>
-        </a-scene>
-
         <div class="footer">
             <p>Developed by Julian Peruzzi</p>
         </div>
 
         <script>
-            // Función para iniciar el modo de Realidad Aumentada con Códigos
-            function startARWithCodes() {
-                document.getElementById('selection-screen').style.display = 'none';
-                document.getElementById('loading-screen').style.display = 'flex';
-                document.getElementById('ar-scene').style.display = 'block';
-            }
-
-            // Función para iniciar el modo Demo sin AR (Fondo Blanco)
-            function startARDemo() {
-                document.getElementById('selection-screen').style.display = 'none';
-                document.getElementById('loading-screen').style.display = 'none';
-                document.getElementById('demo-scene').style.display = 'block';
-            }
-
             // Ocultar la pantalla de carga cuando los modelos estén cargados
-            document.querySelectorAll('a-scene').forEach(scene => {
-                scene.addEventListener('loaded', function () {
-                    document.getElementById('loading-screen').style.display = 'none';
-                });
-            });
-        </script>
-
-        <!-- Script para manejo de gestos (rotación del modelo) -->
-        <script>
-            AFRAME.registerComponent('gesture-handler', {
-                init: function () {
-                    this.el.addEventListener('mousedown', (e) => {
-                        this.startX = e.screenX;
-                        this.rotationY = this.el.getAttribute('rotation').y;
-                        this.dragging = true;
-                    });
-
-                    document.addEventListener('mousemove', (e) => {
-                        if (this.dragging) {
-                            const deltaX = e.screenX - this.startX;
-                            this.el.setAttribute('rotation', {
-                                x: 0,
-                                y: this.rotationY + deltaX * 0.5,
-                                z: 0
-                            });
-                        }
-                    });
-
-                    document.addEventListener('mouseup', () => {
-                        this.dragging = false;
-                    });
-                }
+            document.querySelector('a-scene').addEventListener('loaded', function () {
+                document.getElementById('loading-screen').style.display = 'none';
             });
         </script>
     </body>
